@@ -45,6 +45,34 @@ ArgocdApplications:
     enabled: true
 
   #=================================#
+  #      Monitoring Stack           #
+  #=================================#
+
+  dashboards:
+    enabled: false
+    syncWave: 2
+
+  metrics-server:
+    enabled: false
+    syncWave: 1
+
+  kube-prometheus-stack:
+    enabled: false
+    syncWave: 2
+
+  loki:
+    enabled: false
+    syncWave: 2
+
+  promtail:
+    enabled: true
+    syncWave: 2
+
+  opencost:
+    enabled: false
+    syncWave: 1
+
+  #=================================#
   #      Example Applications       #
   #=================================#
 
