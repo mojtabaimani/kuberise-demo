@@ -9,10 +9,10 @@ vault:
         enabled: true
         ingressClassName: nginx-external
         hosts:
-          - host: vault.onprem.kuberise.dev
+          - host: vault.dev.kuberise.dev
         tls:
          - hosts:
-             - vault.onprem.kuberise.dev
+             - vault.dev.kuberise.dev
 
     # Run Vault in "dev" mode. This requires no further setup, no state management,
     # and no initialization. This is useful for experimenting with Vault without

@@ -3,6 +3,6 @@ opencost:
     ui:
       ingress:
         hosts:
-          - host: opencost.onprem.kuberise.dev
+          - host: opencost.dev.kuberise.dev
             paths:
               - /
