@@ -3,13 +3,13 @@ ollama:
     enabled: true
     className: nginx-external
     hosts:
-      - host: ollama.onprem.kuberise.dev
+      - host: ollama.shared.kuberise.dev
         paths:
           - path: /
             pathType: Prefix
     tls:
       - hosts:
-          - ollama.onprem.kuberise.dev
+          - ollama.shared.kuberise.dev
   ollama:
     models:
       pull:

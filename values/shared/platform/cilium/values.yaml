@@ -11,4 +11,4 @@ cilium:
         enabled: true
         className: nginx-external
         hosts:
-          - hubble.onprem.kuberise.dev
+          - hubble.shared.kuberise.dev
