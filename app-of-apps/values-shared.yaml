@@ -95,7 +95,7 @@ ArgocdApplications:
     syncWave: 1
 
   keycloak-operator:
-    enabled: true
+    enabled: false
     syncWave: 1
 
   cert-manager:
