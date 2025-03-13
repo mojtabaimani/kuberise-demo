@@ -3,7 +3,7 @@ ingress-nginx:
     metrics:
       enabled: true
       serviceMonitor:
-        enabled: true
+        enabled: false
     ingressClassResource:
       enabled: true
       name: nginx-external

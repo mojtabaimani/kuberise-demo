@@ -3,7 +3,7 @@ ingress-nginx:
     metrics:
       enabled: true
       serviceMonitor:
-        enabled: true
+        enabled: false
 
     service:
       type: ClusterIP
