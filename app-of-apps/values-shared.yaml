@@ -73,10 +73,10 @@ ArgocdApplications:
     enabled: true
 
   ingress-nginx-internal:
-    enabled: true
+    enabled: false
 
   ingress-nginx-external:
-    enabled: true
+    enabled: false
 
   cilium:
     enabled: false
