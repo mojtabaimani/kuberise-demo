@@ -76,7 +76,7 @@ ArgocdApplications:
     enabled: false
 
   ingress-nginx-external:
-    enabled: false
+    enabled: true
 
   cilium:
     enabled: false
