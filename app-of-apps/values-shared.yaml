@@ -147,7 +147,7 @@ ArgocdApplications:
     syncWave: 2
 
   kube-prometheus-stack-crds:
-    enabled: false
+    enabled: true
 
   loki:
     enabled: false
