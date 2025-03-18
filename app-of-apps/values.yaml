@@ -40,7 +40,6 @@ ArgocdApplications:
 
   backstage:
     enabled: false
-    syncWave: 1
 
   gitea:
     enabled: false

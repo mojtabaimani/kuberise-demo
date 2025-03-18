@@ -80,7 +80,6 @@ ArgocdApplications:
 
   cilium:
     enabled: false
-    # syncWave: 1
     ignoreDifferences:
       - group: "*"
         kind: "*"
@@ -92,11 +91,10 @@ ArgocdApplications:
 
   keycloak:
     enabled: true
-    syncWave: 1
+    syncWave: 2 # depends on pg db
 
   keycloak-operator:
     enabled: true
-    # syncWave: 1
 
   cert-manager:
     enabled: true
@@ -106,7 +104,7 @@ ArgocdApplications:
 
   oauth2-proxy:
     enabled: false
-    # syncWave: 2
+    syncWave: 3 # depends on keycloak
 
   external-secrets:
     enabled: false
@@ -136,30 +134,25 @@ ArgocdApplications:
 
   dashboards:
     enabled: true
-    # syncWave: 2
 
   metrics-server:
     enabled: false
-    # syncWave: 1
 
   kube-prometheus-stack:
     enabled: true
-    # syncWave: 2
 
   kube-prometheus-stack-crds:
     enabled: true
+    syncWave: 0 # crds are always first
 
   loki:
     enabled: true
-    # syncWave: 2
 
   promtail:
     enabled: true
-    # syncWave: 2
 
   opencost:
     enabled: false
-    # syncWave: 1
 
   #=================================#
   #           AI Tools              #

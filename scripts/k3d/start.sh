@@ -15,5 +15,11 @@ chmod 755 ~/tmp/k3d_docker_images
 if k3d cluster get shared >/dev/null 2>&1; then
   echo "k3d cluster 'shared' already exists"
 else
-  k3d cluster create --config "$SCRIPT_DIR"/shared.yaml
+  k3d cluster create shared --config "$SCRIPT_DIR"/shared.yaml
+fi
+
+if k3d cluster get dev >/dev/null 2>&1; then
+  echo "k3d cluster 'dev' already exists"
+else
+  k3d cluster create dev --config "$SCRIPT_DIR"/dev.yaml
 fi
