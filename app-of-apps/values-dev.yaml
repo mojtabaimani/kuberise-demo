@@ -1,0 +1,91 @@
+ArgocdApplications:
+
+  #=================================#
+  #      Platform Core Apps         #
+  #=================================#
+
+  raw:
+    enabled: true
+
+  #=================================#
+  #      Network Services           #
+  #=================================#
+
+  metallb:
+    enabled: true
+    ignoreDifferences:
+      - group: apiextensions.k8s.io
+        kind: CustomResourceDefinition
+        name: bgppeers.metallb.io
+        jsonPointers:
+          - /spec/conversion/webhook/clientConfig/caBundle
+
+  external-dns:
+    enabled: true
+
+  ingress-nginx-internal:
+    enabled: true
+
+  ingress-nginx-external:
+    enabled: true
+
+  cilium:
+    enabled: false
+    syncWave: 1
+    ignoreDifferences:
+      - group: "*"
+        kind: "*"
+        jsonPointers:
+        - /spec/template/spec/securityContext/appArmorProfile
+  #=================================#
+  #      Security & Auth            #
+  #=================================#
+
+  cert-manager:
+    enabled: true
+
+  #=================================#
+  #      Monitoring Stack           #
+  #=================================#
+
+  dashboards:
+    enabled: false
+    syncWave: 2
+
+  metrics-server:
+    enabled: false
+    syncWave: 1
+
+  kube-prometheus-stack:
+    enabled: false
+    syncWave: 2
+
+  loki:
+    enabled: false
+    syncWave: 2
+
+  promtail:
+    enabled: true
+    syncWave: 2
+
+  opencost:
+    enabled: false
+    syncWave: 1
+
+  #=================================#
+  #      Example Applications       #
+  #=================================#
+
+  show-env:
+    enabled: true
+    annotations:
+      argocd-image-updater.argoproj.io/image-list: ghcr.io/kuberise/show-env:latest
+      argocd-image-updater.argoproj.io/update-strategy: digest
+      argocd-image-updater.argoproj.io/write-back-method: git
+
+  frontend-https:
+    enabled: true
+    syncWave: 1
+
+  backend:
+    enabled: true
