@@ -3,7 +3,7 @@ cilium:
   k8sServicePort: "6443"
   kubeProxyReplacement: "false"
   bpf:
-    masquerade: true
+    masquerade: false
   ipam:
     mode: kubernetes
   operator:
