@@ -41,16 +41,9 @@ function label_secret() {
 
 function generate_ca_cert_and_key() {
   local context=$1
-  local cluster_name=$2
-
-  # Validate cluster_name is provided
-  if [ -z "$cluster_name" ]; then
-    echo "cluster_name is required as an input parameter."
-    return 1
-  fi
 
   # Define the directory and file paths
-  DIR=".env/$cluster_name"
+  DIR=".env"
   CERT="$DIR/ca.crt"
   KEY="$DIR/ca.key"
   CA_BUNDLE="$DIR/ca-bundle.crt"
@@ -357,7 +350,7 @@ if [ -n "${REPOSITORY_TOKEN}" ]; then
   # TODO: Or get a list of teams and their repositories and create repo secret and project for each of them in a loop
 fi
 
-generate_ca_cert_and_key "$CONTEXT" "$CLUSTER_NAME"
+generate_ca_cert_and_key "$CONTEXT"
 
 # Secrets for PostgreSQL
 PG_APP_PASSWORD=$(get_or_generate_secret "$CONTEXT" "$NAMESPACE_CNPG" "database-app" "password")

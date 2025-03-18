@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # Run the docker registry proxy script first
+echo "Starting the docker registry proxy... "
 SCRIPT_DIR="$(dirname "$(realpath "$0")")"
 "$SCRIPT_DIR"/docker-registry-proxy.sh
 
@@ -23,3 +24,7 @@ if k3d cluster get dev >/dev/null 2>&1; then
 else
   k3d cluster create dev --config "$SCRIPT_DIR"/dev.yaml
 fi
+
+REVISION=dev
+./scripts/install.sh k3d-shared shared https://github.com/mojtabaimani/kuberise-demo.git $REVISION shared.kuberise.dev
+./scripts/install.sh k3d-dev dev https://github.com/mojtabaimani/kuberise-demo.git $REVISION dev.kuberise.dev
