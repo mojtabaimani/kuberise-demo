@@ -79,7 +79,7 @@ ArgocdApplications:
     enabled: true
 
   cilium:
-    enabled: false
+    enabled: true
     ignoreDifferences:
       - group: "*"
         kind: "*"
