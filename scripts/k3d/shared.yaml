@@ -9,7 +9,7 @@ options:
   k3d:
     wait: true
     timeout: "60s"
-    disableLoadbalancer: true
+    disableLoadbalancer: false
   kubeconfig:
     updateDefaultKubeconfig: true
     switchCurrentContext: true
@@ -36,10 +36,10 @@ volumes:
   - volume: /Users/mojtaba/tmp/k3d_docker_images:/var/lib/rancher/k3s/agent/containerd/io.containerd.content.v1.content
     nodeFilters:
       - all
-# ports:
-#   - port: 80:30080
-#     nodeFilters:
-#       - server:0
-#   - port: 443:30443
-#     nodeFilters:
-#       - server:0
+ports:
+  - port: 80:80
+    nodeFilters:
+      - loadbalancer
+  - port: 443:443
+    nodeFilters:
+      - loadbalancer
