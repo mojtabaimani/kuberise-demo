@@ -66,7 +66,12 @@ function generate_ca_cert_and_key() {
 
   # Download Let's Encrypt root certificate and create CA bundle
   echo "Creating CA bundle with self-signed and Let's Encrypt certificates..."
-  curl -sL https://letsencrypt.org/certs/isrgrootx1.pem > "$DIR/letsencrypt.crt"
+
+  # Get the directory of the script
+  SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+  # Copy the local letsencrypt.crt file instead of downloading it
+  cp "$SCRIPT_DIR/letsencrypt.crt" "$DIR/letsencrypt.crt"
+
   cat "$CERT" "$DIR/letsencrypt.crt" > "$CA_BUNDLE"
   rm "$DIR/letsencrypt.crt"  # Clean up temporary file
 
