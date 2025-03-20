@@ -2,12 +2,16 @@ cilium:
   k8sServiceHost: 192.168.58.4
   k8sServicePort: "6443"
   kubeProxyReplacement: "false"
+
   bpf:
     masquerade: false
+
   ipam:
     mode: kubernetes
+
   operator:
     replicas: 1
+
   hubble:
     enabled: true
     relay:
@@ -19,3 +23,89 @@ cilium:
         className: nginx-external
         hosts:
           - hubble.shared.kuberise.dev
+
+  cluster:
+    name: shared
+    id: 1
+
+  prometheus:
+    metricsService: true
+    enabled: true
+    port: 9962
+    serviceMonitor:
+      enabled: true
+
+  dashboards:
+    enabled: true
+    label: grafana_dashboard
+    namespace: monitoring
+
+  tls:
+    ca:
+      cert: |
+        -----BEGIN CERTIFICATE-----
+        MIIDFDCCAfygAwIBAgIRAJdKh08i/yJMXvIyq6ZHI9cwDQYJKoZIhvcNAQELBQAw
+        FDESMBAGA1UEAxMJQ2lsaXVtIENBMB4XDTI1MDMyMDIyMTMxNFoXDTI4MDMxOTIy
+        MTMxNFowFDESMBAGA1UEAxMJQ2lsaXVtIENBMIIBIjANBgkqhkiG9w0BAQEFAAOC
+        AQ8AMIIBCgKCAQEAyd+fLKDK04HQxg9jrw4nZxvD2WQhfxs2eFaAnckOgR6tcR7V
+        iuMw+3cEGu70Ly5AHCutqEmE0MYkV2kIxkGoe7d4gRvk5KKgkshLwMWTyBPNxE+g
+        yhMn6IsxSRB+0TzZZ4BnbNvGUAYCDnqzTo5u/Ei8qSnnUh67kn313juws05sFALu
+        cO8T5lVF/Tcfk7gxdqGwtRqJYYYnYlcL467gtcp66FYlJ5mt53Z9zc2u8TsSHdxB
+        dF+2/MbAhuRlziNwx+ZhYTM0csTJ2UKT2sERt12QMlaHvxrckdneyDezAN8ifx3D
+        FcCKLWALNrSiAcq5miMri9C/MGoREEBd4HcuyQIDAQABo2EwXzAOBgNVHQ8BAf8E
+        BAMCAqQwHQYDVR0lBBYwFAYIKwYBBQUHAwEGCCsGAQUFBwMCMA8GA1UdEwEB/wQF
+        MAMBAf8wHQYDVR0OBBYEFEpWP/WV/Rn61eY3rsQkKAKU3Mo2MA0GCSqGSIb3DQEB
+        CwUAA4IBAQB7BuQCXkeXFHrT0/y7ims/6PxBUOkt9tX87i388Hxmg1R7k7+DudVx
+        zoIARcVeJ+szLhxviBzAhNJWU+uSiorhRMc2WdEznwgcUR3U71Vk9BSIv2TTD4gg
+        wYsBC8KWCmIoad73vo6ovMGM6XIuEVnlf0E2B7MjQASK5epg16rHsTNByZ/Sri9N
+        KTUM/rfEKfDEwQvHZDivldgreMnVEo086Okxj/sSqNajY/sxnpJAfIfcmSjnKEz0
+        ona+vrbTevEr5dGUVhr3wFo1tfccmoIuCHbWWKsbZKRGw8r0yDcfJcd57Oczw54y
+        Heb38XkZypZHNfstAVv+XFfroDnS8fPL
+        -----END CERTIFICATE-----
+      key: |
+        -----BEGIN RSA PRIVATE KEY-----
+        MIIEowIBAAKCAQEAyd+fLKDK04HQxg9jrw4nZxvD2WQhfxs2eFaAnckOgR6tcR7V
+        iuMw+3cEGu70Ly5AHCutqEmE0MYkV2kIxkGoe7d4gRvk5KKgkshLwMWTyBPNxE+g
+        yhMn6IsxSRB+0TzZZ4BnbNvGUAYCDnqzTo5u/Ei8qSnnUh67kn313juws05sFALu
+        cO8T5lVF/Tcfk7gxdqGwtRqJYYYnYlcL467gtcp66FYlJ5mt53Z9zc2u8TsSHdxB
+        dF+2/MbAhuRlziNwx+ZhYTM0csTJ2UKT2sERt12QMlaHvxrckdneyDezAN8ifx3D
+        FcCKLWALNrSiAcq5miMri9C/MGoREEBd4HcuyQIDAQABAoIBABQ7of/+k6WUPsED
+        HNoYQJHAgiYhN4w+RXzVKqnl01rUoMyUKxHzCF9Dw/kRFw89gvZv2EVkLPghy9Wo
+        9NSuEv1nW6ARFCVoOVDM227UPqYQehChbHukZN0VSljI2vUMtLt/bp5F/r/Zgk5C
+        NQN8GhqWDbakuQcNhn49uq1N7T1jQpAbmGQU2PZCGsjI1Blsj4SuL0ViCMUbUzu6
+        zMLyYiJmVORJDy6RJPE4LHoBk/FLxjCVcnG4ue2c+cRVejJWZCBfSN3n3q8KF4fV
+        hFM54IyrU7arqor/7c0RGEFjmHu+j5+Au3TRiXB2VV8nmZ3HpO4Egmml8yq1s2kD
+        lBXgfasCgYEA9qqhQbwMrN5ts/rJv7osZlDNvrgpzT5quygwZuGL7ctItoeH94lw
+        vJS02PFzmhOXMMDSjlitAvQzwoIPC4de3x7BHd8nCn+YK4mwyC40MJwZj+LRt51j
+        ZvYZKwvucZM9lS0ByYy4vQPnEWLtzef+bi6B+2664LzQE9xJUctqLc8CgYEA0YMZ
+        H/ILa7kdwwr/QhpVfFVKSpexnFky/RxGs3BFZg2ppUDAUwIiffw/1XRFHZTUF3H7
+        JE0hOjUWC/CiqnjxfOCb3xWX67ZOSgNfq0H84SnEy4VEu0svmqw5KGeLEWYvcQ/q
+        8nqhQEV78cKXHSl5kHnRiatia77EkDk/Fiih1+cCgYARdNXgrww+l6cv24m3ldda
+        jlFhM+tRaR9oi1mRjli2xXIp6MGIlSNzVRrPV5cUyloiyyKbjE8CLIIVO9sQt83R
+        AH4uPQKoTYtZWW83W326CvIMKsMouWy1dqklULzZMNBk5ECCIQFZ7xLFOjkWH1r0
+        NTphrt5u1S3smeRec4TaJQKBgA9gedWYZDIx0fdgtT9aw29uqxcybvy0p0Ngcef1
+        k4Jb+lmAmRz+iR2KB/1YnUIAjFh0KySM7KVjBA04ShgM7Fxn98i1wwKvzKst+DWP
+        kEnOUP1G+LZuXD4T6dYHU3OhdlXr/yhwy6j18JTb3U9sndl2t2RNSdnylGapbPHp
+        ZYd9AoGBALBp+WtPjPSBbgx1VxltfW2L9IVYSB/rLpamZmYNM4CV/vxumpCkQDYH
+        zPmidyT4gTJdTLC3GyfsTKqL7gZNitEQvrqpumekTDFEExMlneUOXi3VOE7Rbop9
+        n9ErSAhBwYYEXgwRMTSwDqoK8logcZVrhv0iv7nqXfF1sLcQY+JI
+        -----END RSA PRIVATE KEY-----
+
+  clustermesh:
+    # -- Deploy clustermesh-apiserver for clustermesh
+    useAPIServer: true
+    apiserver:
+      service:
+        type: NodePort
+    config:
+      # -- Enable the Clustermesh explicit configuration.
+      enabled: false
+      clusters:
+      - name: shared
+        port: 2379
+        ips:
+        - 192.168.58.4
+      - name: dev
+        port: 2379
+        ips:
+        - 192.168.58.6
