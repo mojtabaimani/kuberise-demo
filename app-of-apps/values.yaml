@@ -194,7 +194,7 @@ ArgocdApplications:
     repoURL: https://github.com/prometheus-community/helm-charts.git
     path: charts/kube-prometheus-stack/charts/crds
     namespace: monitoring
-    targetRevision: kube-prometheus-stack-70.0.2
+    targetRevision: kube-prometheus-stack-70.1.1
     type: raw
 
   kube-prometheus-stack:
