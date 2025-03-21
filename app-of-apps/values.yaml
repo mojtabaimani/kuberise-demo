@@ -123,6 +123,7 @@ ArgocdApplications:
 
   cilium:
     enabled: false
+    namespace: kube-system
 
   #=================================#
   #      Security & Auth            #
