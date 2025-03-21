@@ -121,10 +121,6 @@ ArgocdApplications:
   ingresses:
     enabled: false
 
-  cilium:
-    enabled: false
-    namespace: kube-system
-
   #=================================#
   #      Security & Auth            #
   #=================================#

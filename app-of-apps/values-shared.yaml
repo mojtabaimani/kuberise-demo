@@ -78,13 +78,6 @@ ArgocdApplications:
   ingress-nginx-external:
     enabled: true
 
-  cilium:
-    enabled: true
-    ignoreDifferences:
-      - group: "*"
-        kind: "*"
-        jsonPointers:
-        - /spec/template/spec/securityContext/appArmorProfile
   #=================================#
   #      Security & Auth            #
   #=================================#
