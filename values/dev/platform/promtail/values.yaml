@@ -1,7 +1,7 @@
 promtail:
   config:
     clients:
-      - url: https://loki-gateway.shared.kuberise.dev/loki/api/v1/push
+      - url: http://loki-loki-distributed-gateway/loki/api/v1/push
       # If you're using authentication
       # basic_auth:
       #   username: <username>

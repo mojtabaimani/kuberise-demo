@@ -25,6 +25,6 @@ else
   k3d cluster create dev --config "$SCRIPT_DIR"/dev.yaml
 fi
 
-REVISION=dev
+REVISION=clustermesh
 ./scripts/install.sh k3d-shared shared https://github.com/mojtabaimani/kuberise-demo.git $REVISION shared.kuberise.dev 1
 ./scripts/install.sh k3d-dev dev https://github.com/mojtabaimani/kuberise-demo.git $REVISION dev.kuberise.dev 2
