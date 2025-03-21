@@ -55,10 +55,10 @@ clustermesh:
     enabled: true
     clusters:
     - name: shared
-      port: 2379
+      port: 32379
       ips:
       - 192.168.58.4
     - name: dev
-      port: 2379
+      port: 32379
       ips:
       - 192.168.58.6

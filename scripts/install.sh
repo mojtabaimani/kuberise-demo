@@ -5,7 +5,7 @@ set -euo pipefail
 # Function Definitions
 
 function check_required_tools() {
-  local required_tools=("kubectl" "helm" "htpasswd" "openssl")
+  local required_tools=("kubectl" "helm" "htpasswd" "openssl" "cilium")
   for tool in "${required_tools[@]}"; do
     if ! command -v "$tool" &> /dev/null; then
       echo "$tool could not be found, please install it."
@@ -100,7 +100,7 @@ function generate_ca_cert_and_key() {
 function install_argocd() {
   local context=$1
   local namespace=$2
-  local values_file=$3
+  local cluster_name=$3
   local admin_password=$4
   local domain=$5
   echo "Installing ArgoCD using Helm..."
@@ -112,7 +112,7 @@ function install_argocd() {
     --create-namespace  \
     --wait \
     -f values/defaults/platform/argocd/values.yaml \
-    -f "$values_file" \
+    -f values/$cluster_name/platform/argocd/values.yaml \
     --set server.ingress.hostname=argocd."$domain" \
     --set global.domain=argocd."$domain" \
     --set configs.secret.argocdServerAdminPassword="$BCRYPT_HASH" \
@@ -281,6 +281,24 @@ function get_or_generate_secret() {
   echo "$secret_value"
 }
 
+function install_cilium() {
+  local context=$1
+  local cluster_name=$2
+
+  echo "Installing Cilium ..."
+  # repo url:
+  # helm install cilium cilium/cilium --version 1.17.2 --namespace kube-system
+
+  helm upgrade --install --kube-context "$context" -n "kube-system" --wait \
+    -f values/defaults/platform/cilium/values.yaml \
+    -f values/$cluster_name/platform/cilium/values.yaml \
+    --repo https://helm.cilium.io/ \
+    --version 1.17.2 \
+    cilium cilium
+
+  echo "Cilium installation completed."
+}
+
 # Variables Initialization
 # example: ./scripts/install.sh minikube local https://github.com/kuberise/kuberise.git main 127.0.0.1.nip.io $GITHUB_TOKEN
 
@@ -289,7 +307,8 @@ CLUSTER_NAME=${2:-onprem}                               # example: onprem, dta, 
 REPO_URL=${3:-}                                         # example: https://github.com/kuberise/kuberise.git
 TARGET_REVISION=${4:-HEAD}                              # example: HEAD, main, master, v1.0.0, release
 DOMAIN=${5:-onprem.kuberise.dev}                        # example: onprem.kuberise.dev
-REPOSITORY_TOKEN=${6:-}
+CLUSTER_ID=${6:-1}                                      # example: 1, 2, 3, etc. (default: 1)
+REPOSITORY_TOKEN=${7:-}
 
 ADMIN_PASSWORD=${ADMIN_PASSWORD:-admin}
 PG_APP_USERNAME=application
@@ -322,13 +341,13 @@ NAMESPACE_GITEA="gitea"
 NAMESPACE_K8SGPT="k8sgpt"
 
 # Warning Message
-echo -n "WARNING: This script will install the cluster '$CLUSTER_NAME' in the Kubernetes context '$CONTEXT'. Please confirm that you want to proceed by typing 'yes':"
+# echo -n "WARNING: This script will install the cluster '$CLUSTER_NAME' in the Kubernetes context '$CONTEXT'. Please confirm that you want to proceed by typing 'yes':"
 
-read confirmation
-if [ "$confirmation" != "yes" ]; then
-  echo "Installation aborted."
-  exit 0
-fi
+# read confirmation
+# if [ "$confirmation" != "yes" ]; then
+#   echo "Installation aborted."
+#   exit 0
+# fi
 
 check_required_tools
 
@@ -372,6 +391,9 @@ if [ -n "${OPENAI_API_KEY-}" ]; then
   create_secret "$CONTEXT" "$NAMESPACE_K8SGPT" "openai-api" "--from-literal=openai-api-key=$OPENAI_API_KEY"
 fi
 
+# Install Cilium before any other components
+install_cilium "$CONTEXT" "$CLUSTER_NAME"
+
 # Keycloak and Backstage and Grafana secrets
 create_secret "$CONTEXT" "$NAMESPACE_KEYCLOAK" "pg-secret" "--from-literal=KC_DB_USERNAME=$PG_APP_USERNAME --from-literal=KC_DB_PASSWORD=$PG_APP_PASSWORD"
 create_secret "$CONTEXT" "$NAMESPACE_KEYCLOAK" "admin-secret" "--from-literal=KEYCLOAK_ADMIN=admin --from-literal=KEYCLOAK_ADMIN_PASSWORD=$ADMIN_PASSWORD"
@@ -392,8 +414,7 @@ fi
 create_secret "$CONTEXT" "$NAMESPACE_KEYCLOAK" "keycloak-access" "--from-literal=username=admin --from-literal=password=$ADMIN_PASSWORD"
 
 # Install ArgoCD with custom values and admin password
-VALUES_FILE="values/$CLUSTER_NAME/platform/argocd/values.yaml"
-install_argocd "$CONTEXT" "$NAMESPACE_ARGOCD" "$VALUES_FILE" "$ADMIN_PASSWORD" "$DOMAIN"
+install_argocd "$CONTEXT" "$NAMESPACE_ARGOCD" "$CLUSTER_NAME" "$ADMIN_PASSWORD" "$DOMAIN"
 
 
 

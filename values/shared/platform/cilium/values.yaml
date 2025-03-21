@@ -27,6 +27,7 @@ cluster:
   name: shared
   id: 1
 
+# # Needs kube-prometheus-stack CRD before this can be enabled
 # prometheus:
 #   metricsService: true
 #   enabled: true
@@ -34,10 +35,10 @@ cluster:
 #   serviceMonitor:
 #     enabled: true
 
-dashboards:
-  enabled: true
-  label: grafana_dashboard
-  namespace: monitoring
+# dashboards:
+#   enabled: true
+#   label: grafana_dashboard
+#   namespace: monitoring
 
 tls:
   ca:
@@ -55,10 +56,10 @@ clustermesh:
     enabled: true
     clusters:
     - name: shared
-      port: 2379
+      port: 32379
       ips:
       - 192.168.58.4
     - name: dev
-      port: 2379
+      port: 32379
       ips:
       - 192.168.58.6

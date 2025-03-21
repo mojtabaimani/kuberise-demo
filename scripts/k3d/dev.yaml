@@ -9,7 +9,7 @@ options:
   k3d:
     wait: true
     timeout: "60s"
-    disableLoadbalancer: false
+    disableLoadbalancer: true
   kubeconfig:
     updateDefaultKubeconfig: true
     switchCurrentContext: true
@@ -18,6 +18,18 @@ options:
       - arg: --disable=traefik
         nodeFilters:
           - server:*
+      - arg: --disable=servicelb
+        nodeFilters:
+          - server:*
+      - arg: --disable-network-policy
+        nodeFilters:
+          - server:*
+      - arg: --flannel-backend=none
+        nodeFilters:
+          - server:*
+      # - arg: --no-flannel
+      #   nodeFilters:
+      #     - agent:*
 env:
   - envVar: HTTP_PROXY=http://registry-proxy:3128
     nodeFilters:
@@ -28,7 +40,7 @@ env:
   - envVar: NO_PROXY='localhost,127.0.0.1,0.0.0.0,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16,.local,.svc'
     nodeFilters:
       - all
-volumes: # TODO: add kuberise ca to this folder as well
+volumes:
   - volume: /Users/mojtaba/docker_registry_proxy/certs/ca.crt:/etc/ssl/certs/registry-proxy-ca.pem
     nodeFilters:
       - all
@@ -36,10 +48,8 @@ volumes: # TODO: add kuberise ca to this folder as well
   - volume: /Users/mojtaba/tmp/k3d_docker_images:/var/lib/rancher/k3s/agent/containerd/io.containerd.content.v1.content
     nodeFilters:
       - all
-ports:
-  - port: 8080:80
-    nodeFilters:
-      - loadbalancer
-  - port: 8443:443
-    nodeFilters:
-      - loadbalancer
+# ports:
+#   - port: 80:80
+#     nodeFilters:
+#       - loadbalancer
+#   - port: 443:443
