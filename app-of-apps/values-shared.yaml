@@ -84,7 +84,7 @@ ArgocdApplications:
 
   keycloak:
     enabled: true
-    syncWave: 2 # depends on pg db
+    # syncWave: 2 # depends on pg db
 
   keycloak-operator:
     enabled: true
@@ -97,7 +97,7 @@ ArgocdApplications:
 
   oauth2-proxy:
     enabled: false
-    syncWave: 3 # depends on keycloak
+    # syncWave: 3 # depends on keycloak
 
   external-secrets:
     enabled: false
